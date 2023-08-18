@@ -10,4 +10,8 @@ public class AuthenticationHandler {
         SecurityContextHolder.getContext().setAuthentication(new UserAuthenticationToken(userId));
     }
 
+    public long getCurrentUserId() {
+       return (Long) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+    }
+
 }

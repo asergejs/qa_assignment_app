@@ -24,6 +24,8 @@ public class RestApiSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .csrf().disable();
+
+        http.headers().frameOptions().disable();
     }
 
 

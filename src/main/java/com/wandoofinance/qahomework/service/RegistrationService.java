@@ -1,6 +1,7 @@
 package com.wandoofinance.qahomework.service;
 
 
+import com.wandoofinance.qahomework.AuthenticationHandler;
 import com.wandoofinance.qahomework.domain.dto.RegistrationRequestDTO;
 import com.wandoofinance.qahomework.domain.dto.UpdatePersonalDataRequestDTO;
 import com.wandoofinance.qahomework.domain.dto.UserDTO;
@@ -23,9 +24,11 @@ import static java.util.Optional.empty;
 public class RegistrationService {
 
     private final UserRepository userRepository;
+    private final AuthenticationHandler authenticationHandler;
 
-    public RegistrationService(UserRepository userRepository) {
+    public RegistrationService(UserRepository userRepository, AuthenticationHandler authenticationHandler) {
         this.userRepository = userRepository;
+        this.authenticationHandler = authenticationHandler;
     }
 
     public Optional<UserDTO> registerUser(RegistrationRequestDTO registrationRequestDTO) {
@@ -41,8 +44,7 @@ public class RegistrationService {
 
     public Optional<UserDTO> updatePersonalData(UpdatePersonalDataRequestDTO updatePersonalDataRequestDTO) {
         try {
-            Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getCredentials();
-            var  user   = userRepository.findById(userId);
+            var  user   = userRepository.findById(authenticationHandler.getCurrentUserId());
             user.ifPresent(it -> {
                 it.setFirstName(updatePersonalDataRequestDTO.getFirstName());
                 it.setSurname(updatePersonalDataRequestDTO.getSurname());
