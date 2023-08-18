@@ -2,7 +2,6 @@ package com.wandoofinance.qahomework.controllers;
 
 import com.wandoofinance.qahomework.domain.dto.PaymentDTO;
 import com.wandoofinance.qahomework.domain.dto.TransactionRequestDTO;
-import com.wandoofinance.qahomework.domain.entity.Payment;
 import com.wandoofinance.qahomework.mapper.PaymentDTOMapper;
 import com.wandoofinance.qahomework.repository.PaymentRepository;
 import com.wandoofinance.qahomework.service.PaymentService;
@@ -12,14 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.wandoofinance.qahomework.domain.model.TransactionType.FUNDING;
-import static com.wandoofinance.qahomework.mapper.PaymentDTOMapper.toPaymentDTO;
-import static com.wandoofinance.qahomework.mapper.PaymentEntityMapper.transactionReqToPaymentEntity;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.http.ResponseEntity.status;
 

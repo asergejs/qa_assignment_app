@@ -7,6 +7,7 @@ import com.wandoofinance.qahomework.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 
@@ -25,6 +26,10 @@ public class UserService {
     public Optional<User> getCurrentUser() {
         Long userId = authenticationHandler.getCurrentUserId();
         return userRepository.findById(userId);
+    }
+
+    public Optional<BigDecimal> getUserBalance() {
+       return getCurrentUser().map(User::getBalance);
     }
 
 }
