@@ -10,6 +10,9 @@ public class UserDTOMapper {
         var userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setSurname(user.getSurname());
+        userDTO.setPersonalId(user.getPersonalId());
         return userDTO;
     }
 

@@ -5,6 +5,7 @@ import com.wandoofinance.qahomework.domain.dto.RegistrationRequestDTO;
 import com.wandoofinance.qahomework.domain.dto.UpdatePersonalDataRequestDTO;
 import com.wandoofinance.qahomework.domain.dto.UserDTO;
 import com.wandoofinance.qahomework.domain.entity.User;
+import com.wandoofinance.qahomework.mapper.UserDTOMapper;
 import com.wandoofinance.qahomework.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,8 +49,8 @@ public class RegistrationService {
                 it.setPersonalId(updatePersonalDataRequestDTO.getPersonalId());
                 userRepository.save(it);
             });
-
-            return Optional.of(new UserDTO());
+            return Optional.ofNullable(user.map(UserDTOMapper::toUserDTO)
+                    .orElseThrow(Exception::new));
         } catch (Exception ex) {
             log.error("Exception while updating personal data", ex);
             return empty();
