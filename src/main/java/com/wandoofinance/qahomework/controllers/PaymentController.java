@@ -2,6 +2,7 @@ package com.wandoofinance.qahomework.controllers;
 
 import com.wandoofinance.qahomework.domain.dto.TransactionRequestDTO;
 import com.wandoofinance.qahomework.repository.PaymentRepository;
+import com.wandoofinance.qahomework.service.PaymentService;
 import com.wandoofinance.qahomework.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,21 +22,18 @@ import static org.springframework.http.ResponseEntity.status;
 public class PaymentController {
 
     private final PaymentRepository paymentRepository;
-    private final UserService       userService;
+    private final PaymentService    paymentService;
 
-    public PaymentController(PaymentRepository paymentRepository, UserService userService) {
+    public PaymentController(PaymentRepository paymentRepository, PaymentService paymentService) {
         this.paymentRepository = paymentRepository;
-        this.userService = userService;
+        this.paymentService = paymentService;
     }
 
     @PostMapping("/add-funds")
     public ResponseEntity<?> addFunds(@RequestBody TransactionRequestDTO transactionRequestDTO) {
-        var user = userService.getCurrentUser();
-        if (user.isPresent()) {
-            var payment = paymentRepository.save(transactionReqToPaymentEntity(transactionRequestDTO, FUNDING, user.get()));
-            return ok().body("Payment imported, id: " + payment.getId());
-        }
-        return status(400).body("Something went wrong");
+        return paymentService.handleAddFundsPayment(transactionRequestDTO)
+                .map(paymentId -> ok().body("Payment imported, id: " + paymentId))
+                .orElse(status(400).body("Something went wrong"));
     }
 
 }

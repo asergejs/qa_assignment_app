@@ -5,17 +5,15 @@ import com.wandoofinance.qahomework.AuthenticationHandler;
 import com.wandoofinance.qahomework.domain.dto.RegistrationRequestDTO;
 import com.wandoofinance.qahomework.domain.dto.UpdatePersonalDataRequestDTO;
 import com.wandoofinance.qahomework.domain.dto.UserDTO;
-import com.wandoofinance.qahomework.domain.entity.User;
 import com.wandoofinance.qahomework.mapper.UserDTOMapper;
 import com.wandoofinance.qahomework.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static com.wandoofinance.qahomework.mapper.UserDTOMapper.toUserDTO;
-import static com.wandoofinance.qahomework.mapper.UserEntityMapper.personalDataReqToUserEntity;
 import static com.wandoofinance.qahomework.mapper.UserEntityMapper.registrationReqToUserEntity;
 import static java.util.Optional.empty;
 
@@ -49,6 +47,7 @@ public class RegistrationService {
                 it.setFirstName(updatePersonalDataRequestDTO.getFirstName());
                 it.setSurname(updatePersonalDataRequestDTO.getSurname());
                 it.setPersonalId(updatePersonalDataRequestDTO.getPersonalId());
+                it.setBalance(BigDecimal.ZERO);
                 userRepository.save(it);
             });
             return Optional.ofNullable(user.map(UserDTOMapper::toUserDTO)
