@@ -30,4 +30,7 @@ public class Payment {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "raw_response")
+    private String rawResponse;
+
 }
