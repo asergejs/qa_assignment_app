@@ -23,5 +23,13 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "personal_id")
+    private Long personalId;
 
 }

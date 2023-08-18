@@ -1,10 +1,12 @@
 package com.wandoofinance.qahomework;
 
+import lombok.Getter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+@Getter
 public class UserAuthenticationToken implements Authentication {
 
     private final Long userId;
@@ -20,7 +22,7 @@ public class UserAuthenticationToken implements Authentication {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return this.userId;
     }
 
     @Override

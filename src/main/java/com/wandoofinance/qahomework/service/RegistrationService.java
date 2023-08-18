@@ -2,14 +2,18 @@ package com.wandoofinance.qahomework.service;
 
 
 import com.wandoofinance.qahomework.domain.dto.RegistrationRequestDTO;
+import com.wandoofinance.qahomework.domain.dto.UpdatePersonalDataRequestDTO;
 import com.wandoofinance.qahomework.domain.dto.UserDTO;
+import com.wandoofinance.qahomework.domain.entity.User;
 import com.wandoofinance.qahomework.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 import static com.wandoofinance.qahomework.mapper.UserDTOMapper.toUserDTO;
+import static com.wandoofinance.qahomework.mapper.UserEntityMapper.personalDataReqToUserEntity;
 import static com.wandoofinance.qahomework.mapper.UserEntityMapper.registrationReqToUserEntity;
 import static java.util.Optional.empty;
 
@@ -30,6 +34,24 @@ public class RegistrationService {
             return Optional.of(toUserDTO(user));
         } catch (Exception ex) {
             log.error("Exception while signing up", ex);
+            return empty();
+        }
+    }
+
+    public Optional<UserDTO> updatePersonalData(UpdatePersonalDataRequestDTO updatePersonalDataRequestDTO) {
+        try {
+            Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+            var  user   = userRepository.findById(userId);
+            user.ifPresent(it -> {
+                it.setFirstName(updatePersonalDataRequestDTO.getFirstName());
+                it.setSurname(updatePersonalDataRequestDTO.getSurname());
+                it.setPersonalId(updatePersonalDataRequestDTO.getPersonalId());
+                userRepository.save(it);
+            });
+
+            return Optional.of(new UserDTO());
+        } catch (Exception ex) {
+            log.error("Exception while updating personal data", ex);
             return empty();
         }
     }

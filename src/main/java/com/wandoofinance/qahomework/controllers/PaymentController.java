@@ -15,4 +15,5 @@ public class PaymentController {
     public ResponseEntity<String> testEndpoint() {
         return ok().body("ok");
     }
+
 }
