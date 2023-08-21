@@ -1,4 +1,4 @@
-package com.wandoofinance.qahomework.controllers;
+package com.wandoofinance.qahomework.controller;
 
 import com.wandoofinance.qahomework.domain.dto.UpdatePersonalDataRequestDTO;
 import com.wandoofinance.qahomework.domain.model.Message;

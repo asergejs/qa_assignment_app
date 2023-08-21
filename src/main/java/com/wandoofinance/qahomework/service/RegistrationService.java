@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static com.wandoofinance.qahomework.mapper.UserDTOMapper.toUserDTO;
 import static com.wandoofinance.qahomework.mapper.UserEntityMapper.registrationReqToUserEntity;
-import static java.util.Optional.empty;
 
 @Slf4j
 @Component

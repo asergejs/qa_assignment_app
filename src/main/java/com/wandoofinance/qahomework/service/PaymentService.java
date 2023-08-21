@@ -2,7 +2,6 @@ package com.wandoofinance.qahomework.service;
 
 import com.wandoofinance.qahomework.domain.dto.TransactionRequestDTO;
 import com.wandoofinance.qahomework.domain.entity.Payment;
-import com.wandoofinance.qahomework.domain.entity.User;
 import com.wandoofinance.qahomework.repository.PaymentRepository;
 import com.wandoofinance.qahomework.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
