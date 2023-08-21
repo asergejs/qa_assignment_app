@@ -1,7 +1,6 @@
 package com.wandoofinance.qahomework.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.wandoofinance.qahomework.domain.model.PaymentStatus;
 import com.wandoofinance.qahomework.domain.model.TransactionType;
 import lombok.Getter;
 import lombok.Setter;

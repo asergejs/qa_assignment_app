@@ -5,6 +5,7 @@ import com.wandoofinance.qahomework.domain.model.Message;
 import com.wandoofinance.qahomework.domain.model.RegisterUserResponse;
 import com.wandoofinance.qahomework.service.RegistrationService;
 import com.wandoofinance.qahomework.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,16 +14,12 @@ import javax.validation.Valid;
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/api")
 public class UserDataController {
 
     private final RegistrationService registrationService;
     private final UserService userService;
-
-    public UserDataController(RegistrationService registrationService, UserService userService) {
-        this.registrationService = registrationService;
-        this.userService = userService;
-    }
 
     @PostMapping("/personal-data")
     public ResponseEntity<?> updatePersonalData(@RequestBody @Valid UpdatePersonalDataRequestDTO updatePersonalDataRequestDTO) {

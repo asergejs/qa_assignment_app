@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -17,42 +14,36 @@ import java.time.LocalDate;
 @Setter
 public class TransactionRequestDTO {
 
-    @NotBlank(message = "Account number is required")
-    @NotNull
+    @NotEmpty(message = "Account number is required")
     @JsonProperty("accountNumber")
     private String accountNumber;
 
-    @NotBlank(message = "Account holder full name is required")
-    @NotNull
+    @NotEmpty(message = "Account holder full name is required")
     private String accountHolderFullName;
 
-    @NotBlank(message = "Account holder personal ID is required")
-    @NotNull
+    @NotEmpty(message = "Account holder personal ID is required")
     private String accountHolderPersonalId;
 
-    @NotNull(message = "Transaction type is required")
-    @NotNull
+    @NotEmpty(message = "Transaction type is required")
     private TransactionType transactionType;
 
-    @NotBlank(message = "Investor ID is required")
-    @NotNull
+    @NotEmpty(message = "Investor ID is required")
     private String investorId;
 
     @Valid
     private AmountDTO amount;
 
-    @NotNull(message = "Booking date is required")
+    @NotEmpty(message = "Booking date is required")
     @PastOrPresent(message = "Booking date must be in the past or present")
     private LocalDate bookingDate;
 
     @Getter
     @Setter
     public static class AmountDTO {
-        @NotBlank(message = "Currency is required")
-        @NotNull
+        @NotEmpty(message = "Currency is required")
         private String currency;
 
-        @NotNull(message = "Amount is required")
+        @NotEmpty(message = "Amount is required")
         @DecimalMin(value = "0.01", message = "Amount must be greater than or equal to 0.01")
         private BigDecimal amount;
     }

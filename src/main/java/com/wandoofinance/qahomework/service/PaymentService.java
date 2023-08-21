@@ -5,6 +5,7 @@ import com.wandoofinance.qahomework.domain.entity.Payment;
 import com.wandoofinance.qahomework.domain.entity.User;
 import com.wandoofinance.qahomework.repository.PaymentRepository;
 import com.wandoofinance.qahomework.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,33 +16,25 @@ import static com.wandoofinance.qahomework.mapper.PaymentEntityMapper.transactio
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PaymentService {
 
-    private final UserService       userService;
+    private final UserService userService;
     private final PaymentRepository paymentRepository;
-    private final UserRepository    userRepository;
-
-    public PaymentService(UserService userService, PaymentRepository paymentRepository, UserRepository userRepository) {
-        this.userService = userService;
-        this.paymentRepository = paymentRepository;
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     public Optional<Long> handleAddFundsPayment(TransactionRequestDTO transactionRequestDTO) {
         var user = userService.getCurrentUser();
 
-        if (user.isPresent()) {
-            User currentUser = user.get();
-            Payment payment = transactionReqToPaymentEntity(transactionRequestDTO, FUNDING, currentUser);
-            currentUser.setBalance(currentUser.getBalance().add(payment.getAmount()));
+        return user.map(maybeUser -> {
+            Payment payment = transactionReqToPaymentEntity(transactionRequestDTO, FUNDING, maybeUser);
+            maybeUser.setBalance(maybeUser.getBalance().add(payment.getAmount()));
 
             paymentRepository.save(payment);
-            userRepository.save(currentUser);
+            userRepository.save(maybeUser);
 
-            return Optional.of(payment.getId());
-        }
-
-        return Optional.empty();
+            return payment.getId();
+        });
     }
 
 }

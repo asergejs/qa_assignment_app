@@ -18,17 +18,8 @@ public class RegistrationRequestValidator {
     }
 
     public ValidationStatus validate(RegistrationRequestDTO requestDTO) {
-
-        if (requestDTO.getEmail() == null || requestDTO.getPassword() == null) {
-            return new ValidationStatus(false, new Message("fail", "Mandatory fields are empty"));
-        }
-
-        if (requestDTO.getEmail().isBlank() || requestDTO.getPassword().isBlank()) {
-            return new ValidationStatus(false, new Message("fail", "Incorrect format of mandatory fields"));
-        }
-
         if (userRepository.findByEmail(requestDTO.getEmail()).isPresent()) {
-            return new ValidationStatus(false, new Message("fail", "Wrong email"));
+            return new ValidationStatus(false, new Message("fail", "Email already exists."));
         }
 
         return new ValidationStatus(true);
