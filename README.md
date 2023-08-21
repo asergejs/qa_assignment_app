@@ -7,7 +7,7 @@ Run QahomeworkApplication.java main class
 
 Project uses lombok, so in Intellij Idea need enable annotation processing.
 
-> Buld->Compiler->AnnotationProcessors->"Enable annotation processing"
+> Build->Compiler->AnnotationProcessors->"Enable annotation processing"
 
 ## Swagger documentation
 http://localhost:8080/swagger-ui/index.html
